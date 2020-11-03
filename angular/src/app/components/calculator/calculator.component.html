@@ -1,0 +1,12 @@
+<div class="calculator">
+	<div class="display">
+		<span>{{display}}</span>
+		<div class="operator">{{operator}}</div>
+	</div>
+	<div class="buttons">
+		<button *ngFor="let b of BT_TEXTS" class="{{(b == 'empty') ? 'empty' : 'button'}}"
+				(click)="onClick($event)">
+			{{b}}
+		</button>
+	</div>
+</div>
