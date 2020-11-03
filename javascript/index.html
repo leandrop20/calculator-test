@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Calculator Test</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+</head>
+<body>
+	<div class="calculator">
+		<div id="screen" class="screen">
+			<span>0</span>
+			<div id="operator" class="operator"></div>
+		</div>
+		<div id="buttons" class="buttons">
+			
+		</div>
+	</div>
+	<script type="text/javascript" src="src/enums/OperatorType.js"></script>
+	<script type="text/javascript" src="src/Empty.js"></script>
+	<script type="text/javascript" src="src/Button.js"></script>
+	<script type="text/javascript" src="src/Screen.js"></script>
+	<script type="text/javascript" src="src/Calculator.js"></script>
+	<script>
+		window.onload = () => {
+			new Calculator();
+		};
+	</script>
+</body>
+</html>
