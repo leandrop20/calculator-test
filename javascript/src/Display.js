@@ -1,12 +1,16 @@
-class Screen {
+class Display {
 
 	constructor() {
-		this.screen = document.querySelector('#screen span');
+		this.display = document.querySelector('#display span');
 		this.operator = document.getElementById('operator');
 	}
 
+	get current() {
+		return this.display.innerText;
+	}
+
 	show(text) {
-		this.screen.innerText = text;
+		this.display.innerText = text;
 	}
 
 	showOperator(text) {
@@ -14,7 +18,7 @@ class Screen {
 	}
 
 	reset() {
-		this.screen.innerText = 0;
+		this.display.innerText = 0;
 		this.operator.innerText = '';
 	}
 

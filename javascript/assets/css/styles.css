@@ -13,7 +13,7 @@ body {
 	padding: 10px;
 }
 
-.calculator .screen {
+.calculator .display {
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 	border: 1px solid #999;
@@ -24,7 +24,7 @@ body {
 	user-select: none;
 }
 
-.calculator .screen .operator {
+.calculator .display .operator {
 	position: absolute;
 	top: 10px;
 	color: #999;

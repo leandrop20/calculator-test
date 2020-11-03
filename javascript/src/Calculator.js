@@ -4,14 +4,13 @@ class Calculator {
 		Calculator.this = this;
 
 		this.buttons = document.getElementById('buttons');
-		this.screen = new Screen();
+		this.display = new Display();
 
 		this.createButtons();
 
-		this.operator = null;
-		this.value1 = 0;
-		this.value2 = 0;
-		this.lastClickWasOperator = false;
+		this.value1 = -1;
+		this.value2 = -1;
+		this.operatorType = null;
 	}
 
 	get BT_TEXTS() {
@@ -27,30 +26,32 @@ class Calculator {
 	set value(value) {
 		var n = 0;
 
-		if (!this.operator) {
+		if (!this.operatorType) {
+			if (this.value1 == -1) { this.value1 = 0; }
+
 			this.value1 = parseInt(this.value1 + value);
 			n = this.value1;
 		} else {
-			if (this.lastClickWasOperator) { this.value2 = ''; }
+			if (this.value2 == -1) { this.value2 = 0; }
 
 			this.value2 = parseInt(this.value2 + value);
 			n = this.value2;
 		}
 
-		this.screen.show(n);
+		this.display.show(n.toString());
 	}
 
 	setOperator(symbol) {
-		if (this.operator) { this.value2 = this.value1; }
+		this.value1 = parseInt(this.display.current);
 
 		switch (symbol) {
-			case '+': this.operator = OperatorType.SUM; break;
-			case '-': this.operator = OperatorType.SUBTRACTION; break;
-			case 'x': this.operator = OperatorType.MULTIPLICATION; break;
-			case '÷': this.operator = OperatorType.DIVISION; break;
+			case '+': this.operatorType = OperatorType.SUM; break;
+			case '-': this.operatorType = OperatorType.SUBTRACTION; break;
+			case 'x': this.operatorType = OperatorType.MULTIPLICATION; break;
+			case '÷': this.operatorType = OperatorType.DIVISION; break;
 		}
 
-		this.screen.showOperator(symbol);
+		this.display.showOperator(symbol);
 	}
 
 	createButtons() {
@@ -74,47 +75,49 @@ class Calculator {
 			case '-':
 			case 'x':
 			case '÷':
-				Calculator.this.lastClick = true;
+				Calculator.this.value2 = -1;
 				Calculator.this.setOperator(e.currentTarget.innerText);
 				break;
 			case '=':
-				Calculator.this.calculate();
-				Calculator.this.lastClickWasOperator = false;
+				if (Calculator.this.value2 == -1) {
+					Calculator.this.value2 = Calculator.this.value1;
+				}
+
+				Calculator.this.value1 = Calculator.this.calculate();
+				Calculator.this.display.show(Calculator.this.value1.toString());
 				break;
 			case 'C':
 				Calculator.this.reset();
-				Calculator.this.lastClickWasOperator = false;
 				break;
 			default:
 				Calculator.this.value = e.currentTarget.innerText;
-				Calculator.this.lastClickWasOperator = false;
 		}
 	}
 
 	calculate() {
-		switch (this.operator) {
+		switch (this.operatorType) {
 			case OperatorType.SUM:
-				this.value1 = this.value1 + this.value2;
+				return this.value1 + this.value2;
 				break;
 			case OperatorType.SUBTRACTION: 
-				this.value1 = this.value1 - this.value2;
+				return this.value1 - this.value2;
 				break;
 			case OperatorType.MULTIPLICATION:
-				this.value1 = this.value1 * this.value2;
+				return this.value1 * this.value2;
 				break;
 			case OperatorType.DIVISION:
-				this.value1 = this.value1 / this.value2;
+				return this.value1 / this.value2;
 				break;
 		}
 
-		this.screen.show(this.value1);
+		return 0;
 	}
 
 	reset() {
-		this.value1 = 0;
-		this.value2 = 0;
-		this.operator = null;
-		this.screen.reset();
+		this.value1 = -1;
+		this.value2 = -1;
+		this.operatorType = null;
+		this.display.reset();
 	}
 
 }
